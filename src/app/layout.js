@@ -1,16 +1,20 @@
-import { Playfair_Display, Poppins } from "next/font/google";
+import { Cormorant_Garamond, Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import IntroSplash from "./components/IntroSplash";
+import WhatsAppButton from "./components/WhatsAppButton";
+import MobileTabBar from "./components/MobileTabBar";
 
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
+const cormorant = Cormorant_Garamond({
+  variable: "--font-display",
   subsets: ["latin"],
   weight: ["400", "600", "700"],
+  style: ["normal", "italic"],
 });
 
-const poppins = Poppins({
-  variable: "--font-poppins",
+const inter = Inter({
+  variable: "--font-sans",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
 });
@@ -24,11 +28,15 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      className={`${playfair.variable} ${poppins.variable} h-full antialiased`}
+      className={`${cormorant.variable} ${inter.variable} h-full antialiased`}
+      data-scroll-behavior="smooth"
     >
       <body className="min-h-full flex flex-col bg-black text-white">
+        <IntroSplash />
         <Navbar />
         {children}
+        <WhatsAppButton />
+        <MobileTabBar />
         <Footer />
       </body>
     </html>
