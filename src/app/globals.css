@@ -21,9 +21,6 @@
   --font-display: 'Cormorant Garamond', serif;
 }
 
-* {
-  overscroll-behavior: none;
-}
 
 html {
   scroll-behavior: smooth;

@@ -3,15 +3,16 @@
 import { useState } from "react";
 import { createPortal } from "react-dom";
 import emailjs from "@emailjs/browser";
+import AddressInput from "./AddressInput";
 
 const vehicles = [
-  { name: "Cadillac Escalade", tag: "Flagship SUV", passengers: 7 },
-  { name: "GMC Yukon Denali", tag: "Most Popular", passengers: 7 },
-  { name: "Chevrolet Suburban", tag: "Group SUV", passengers: 7 },
-  { name: "Lincoln Navigator", tag: "Ultra-Luxury SUV", passengers: 7 },
-  { name: "Mercedes-Benz E-Class", tag: "Executive Sedan", passengers: 4 },
-  { name: "BMW 5 Series", tag: "Sport Executive", passengers: 4 },
-  { name: "Mercedes-Benz S-Class", tag: "Pinnacle Sedan", passengers: 4 },
+  { name: "Cadillac Escalade", tag: "Flagship SUV", passengers: 7, deposit: 50 },
+  { name: "GMC Yukon Denali", tag: "Most Popular", passengers: 7, deposit: 50 },
+  { name: "Chevrolet Suburban", tag: "Group SUV", passengers: 7, deposit: 45 },
+  { name: "Lincoln Navigator", tag: "Ultra-Luxury SUV", passengers: 7, deposit: 50 },
+  { name: "Mercedes-Benz E-Class", tag: "Executive Sedan", passengers: 4, deposit: 40 },
+  { name: "BMW 5 Series", tag: "Sport Executive", passengers: 4, deposit: 40 },
+  { name: "Mercedes-Benz S-Class", tag: "Pinnacle Sedan", passengers: 4, deposit: 60 },
 ];
 
 export default function BookingModal({ onClose }) {
@@ -29,10 +30,11 @@ export default function BookingModal({ onClose }) {
   const [sending, setSending] = useState(false);
   const [done, setDone] = useState(false);
 
-  function handleSubmit(e) {
+function handleSubmit(e) {
     e.preventDefault();
     setSending(true);
 
+    // Send internal notification email first
     emailjs
       .send(
         "service_95rcxko",
@@ -46,17 +48,38 @@ export default function BookingModal({ onClose }) {
           date,
           time,
           passengers,
-          message: `Vehicle requested: ${vehicle?.name}. ${notes}`,
+          message: `Vehicle requested: ${vehicle?.name}. Deposit pending. ${notes}`,
         },
         "GTlJY6rGVOkzVuY6-"
       )
-      .then(() => {
-        setDone(true);
-        setSending(false);
+      .catch((err) => console.error("Email failed:", err));
+
+    // Create Stripe checkout session for the deposit
+    fetch("/api/create-checkout-session", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        vehicleName: vehicle?.name,
+        depositAmount: vehicle?.deposit,
+        customerEmail: email,
+        pickup,
+        dropoff,
+        date,
+        time,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.url) {
+          window.location.href = data.url;
+        } else {
+          throw new Error("No checkout URL returned");
+        }
       })
-      .catch(() => {
+      .catch((err) => {
+        console.error("Stripe error:", err);
         setSending(false);
-        alert("Something went wrong. Please try WhatsApp or call us instead.");
+        alert("Something went wrong starting payment. Please try WhatsApp or call us instead.");
       });
   }
 
@@ -249,6 +272,10 @@ export default function BookingModal({ onClose }) {
                 <p><span className="text-gold">To:</span> {dropoff}</p>
                 <p><span className="text-gold">Date/Time:</span> {date} at {time}</p>
                 <p><span className="text-gold">Passengers:</span> {passengers}</p>
+                <div className="border-t border-border mt-3 pt-3 flex justify-between items-center">
+                  <span className="text-gold uppercase tracking-widest text-xs">Deposit Due Now</span>
+                  <span className="text-gold text-xl font-bold">${vehicle?.deposit} CAD</span>
+                </div>
               </div>
             </div>
             <div className="flex gap-3">
@@ -264,7 +291,7 @@ export default function BookingModal({ onClose }) {
                 disabled={sending}
                 className="flex-1 border border-gold text-gold px-8 py-3 rounded-full uppercase tracking-widest text-sm hover:bg-gold hover:text-black transition-all duration-300 disabled:opacity-50"
               >
-                {sending ? "Sending..." : "Submit Request"}
+                {sending ? "Redirecting to payment..." : `Pay $${vehicle?.deposit} Deposit`}
               </button>
             </div>
           </form>
