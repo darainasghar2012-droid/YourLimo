@@ -2,10 +2,12 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import BookingModal from "./BookingModal";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     function handleScroll() {
@@ -56,12 +58,12 @@ export default function Navbar() {
           >
             (647) 833-3003
           </a>
-          <Link
-            href="/contact"
+          <button
+            onClick={() => setModalOpen(true)}
             className="border border-gold text-gold px-5 py-2 rounded-full uppercase tracking-widest text-xs hover:bg-gold hover:text-black transition-all duration-300"
           >
             Book Now
-          </Link>
+          </button>
         </div>
 
         {/* Mobile menu button */}
@@ -92,15 +94,19 @@ export default function Navbar() {
           >
             (647) 833-3003
           </a>
-          <Link
-            href="/contact"
-            onClick={() => setMenuOpen(false)}
+          <button
+            onClick={() => {
+              setModalOpen(true);
+              setMenuOpen(false);
+            }}
             className="border border-gold text-gold px-6 py-2 rounded-full uppercase tracking-widest text-xs hover:bg-gold hover:text-black transition-all duration-300"
           >
             Book Now
-          </Link>
+          </button>
         </div>
       )}
+
+      {modalOpen && <BookingModal onClose={() => setModalOpen(false)} />}
     </header>
   );
 }
