@@ -1,6 +1,7 @@
 import MovingLimo from "./components/MovingLimo";
 import Testimonials from "./components/Testimonials";
 import PriceCalculator from "./components/PriceCalculator";
+import FadeIn from "./components/FadeIn";
 
 export default function Home() {
   return (
@@ -22,35 +23,39 @@ export default function Home() {
         <div className="relative z-10 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center w-full">
           {/* Left: Headline */}
           <div className="text-center md:text-left">
-            <p className="text-gold uppercase tracking-[0.2em] text-sm mb-4 flex items-center gap-2 justify-center md:justify-start">
-              <span className="w-8 h-px bg-gold inline-block" />
-              Niagara's Premier Chauffeur Service
-            </p>
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-              Arrive in Style.
-              <br />
-              <span className="text-gold">Travel in Luxury.</span>
-            </h1>
-            <p className="text-gray-300 text-lg mb-8 max-w-md mx-auto md:mx-0">
-              Premium Chauffeur SUV Service across Ontario, headquartered in
-              the Niagara Region.
-            </p>
+            <FadeIn>
+              <p className="text-gold uppercase tracking-[0.2em] text-sm mb-4 flex items-center gap-2 justify-center md:justify-start">
+                <span className="w-8 h-px bg-gold inline-block" />
+                Niagara's Premier Chauffeur Service
+              </p>
+              <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+                Arrive in Style.
+                <br />
+                <span className="text-gold">Travel in Luxury.</span>
+              </h1>
+              <p className="text-gray-300 text-lg mb-8 max-w-md mx-auto md:mx-0">
+                Premium Chauffeur SUV Service across Ontario, headquartered in
+                the Niagara Region.
+              </p>
+            </FadeIn>
 
             {/* Stats grid */}
-            <div className="grid grid-cols-3 gap-4 mb-8 max-w-md mx-auto md:mx-0">
-              <div className="border border-border rounded-lg py-4 text-center">
-                <p className="text-gold text-xl font-bold">24/7</p>
-                <p className="text-xs text-gray-400 uppercase tracking-wide">Available</p>
+            <FadeIn delay={200}>
+              <div className="grid grid-cols-3 gap-4 mb-8 max-w-md mx-auto md:mx-0">
+                <div className="border border-border rounded-lg py-4 text-center">
+                  <p className="text-gold text-xl font-bold">24/7</p>
+                  <p className="text-xs text-gray-400 uppercase tracking-wide">Available</p>
+                </div>
+                <div className="border border-border rounded-lg py-4 text-center">
+                  <p className="text-gold text-xl font-bold">7+</p>
+                  <p className="text-xs text-gray-400 uppercase tracking-wide">Vehicles</p>
+                </div>
+                <div className="border border-border rounded-lg py-4 text-center">
+                  <p className="text-gold text-xl font-bold">100%</p>
+                  <p className="text-xs text-gray-400 uppercase tracking-wide">On-Time</p>
+                </div>
               </div>
-              <div className="border border-border rounded-lg py-4 text-center">
-                <p className="text-gold text-xl font-bold">7+</p>
-                <p className="text-xs text-gray-400 uppercase tracking-wide">Vehicles</p>
-              </div>
-              <div className="border border-border rounded-lg py-4 text-center">
-                <p className="text-gold text-xl font-bold">100%</p>
-                <p className="text-xs text-gray-400 uppercase tracking-wide">On-Time</p>
-              </div>
-            </div>
+            </FadeIn>
 
             <a
               href="tel:+16478333003"
@@ -61,18 +66,20 @@ export default function Home() {
           </div>
 
           {/* Right: Quote Request CTA (simplified for now) */}
-          <div className="bg-black/80 backdrop-blur-md border border-gold/30 rounded-xl p-8">
-            <p className="text-gold uppercase tracking-widest text-xs mb-2">
-              Instant Quote
-            </p>
-            <h3 className="text-2xl mb-6">Book Your Ride</h3>
-            <a
-              href="/contact"
-              className="block text-center border border-gold text-gold px-6 py-3 rounded-full uppercase tracking-widest text-sm hover:bg-gold hover:text-black transition-all duration-300"
-            >
-              Request a Quote
-            </a>
-          </div>
+          <FadeIn delay={300}>
+            <div className="bg-black/80 backdrop-blur-md border border-gold/30 rounded-xl p-8">
+              <p className="text-gold uppercase tracking-widest text-xs mb-2">
+                Instant Quote
+              </p>
+              <h3 className="text-2xl mb-6">Book Your Ride</h3>
+              <a
+                href="/contact"
+                className="block text-center border border-gold text-gold px-6 py-3 rounded-full uppercase tracking-widest text-sm hover:bg-gold hover:text-black transition-all duration-300"
+              >
+                Request a Quote
+              </a>
+            </div>
+          </FadeIn>
         </div>
       </section>
 
@@ -83,16 +90,18 @@ export default function Home() {
             { icon: "🕐", title: "24/7 Availability", desc: "On-demand service any time, any day" },
             { icon: "🛡️", title: "Professional Chauffeurs", desc: "Vetted, trained & courteous drivers" },
             { icon: "⚡", title: "Punctuality Guaranteed", desc: "On-time arrival, every single trip" },
-          ].map((item) => (
-            <div key={item.title} className="flex items-center gap-4 justify-center md:justify-start">
-              <div className="w-12 h-12 rounded-lg bg-gold/10 flex items-center justify-center text-2xl shrink-0">
-                {item.icon}
+          ].map((item, i) => (
+            <FadeIn key={item.title} delay={i * 100}>
+              <div className="flex items-center gap-4 justify-center md:justify-start">
+                <div className="w-12 h-12 rounded-lg bg-gold/10 flex items-center justify-center text-2xl shrink-0">
+                  {item.icon}
+                </div>
+                <div className="text-center md:text-left">
+                  <h4 className="text-white font-medium">{item.title}</h4>
+                  <p className="text-gray-400 text-sm">{item.desc}</p>
+                </div>
               </div>
-              <div className="text-center md:text-left">
-                <h4 className="text-white font-medium">{item.title}</h4>
-                <p className="text-gray-400 text-sm">{item.desc}</p>
-              </div>
-            </div>
+            </FadeIn>
           ))}
         </div>
       </section>
@@ -101,34 +110,37 @@ export default function Home() {
 
       {/* SERVICES PREVIEW */}
       <section className="py-24 px-6 bg-black text-center">
-        <h2 className="text-3xl md:text-4xl mb-4">Our Services</h2>
-        <p className="text-gray-400 mb-16 max-w-2xl mx-auto">
-          From airport transfers to weddings, we provide reliable, first-class transportation across the Niagara Region.
-        </p>
+        <FadeIn>
+          <h2 className="text-3xl md:text-4xl mb-4">Our Services</h2>
+          <p className="text-gray-400 mb-16 max-w-2xl mx-auto">
+            From airport transfers to weddings, we provide reliable, first-class transportation across the Niagara Region.
+          </p>
+        </FadeIn>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-6xl mx-auto">
           {[
             { title: "Airport Transfers", desc: "On-time pickups and drop-offs, every time." },
             { title: "Weddings", desc: "Arrive to your big day in complete elegance." },
             { title: "Corporate Travel", desc: "Professional, punctual travel for business." },
             { title: "Hourly Rentals", desc: "Flexible chauffeur service, by the hour." },
-          ].map((service) => (
-            <div
-              key={service.title}
-              className="border border-gray-800 rounded-lg p-8 hover:border-gold transition-all duration-300"
-            >
-              <h3 className="text-xl mb-3 text-gold-light">{service.title}</h3>
-              <p className="text-gray-400 text-sm">{service.desc}</p>
-            </div>
+          ].map((service, i) => (
+            <FadeIn key={service.title} delay={i * 100}>
+              <div className="border border-gray-800 rounded-lg p-8 hover:border-gold hover:-translate-y-1 transition-all duration-300">
+                <h3 className="text-xl mb-3 text-gold-light">{service.title}</h3>
+                <p className="text-gray-400 text-sm">{service.desc}</p>
+              </div>
+            </FadeIn>
           ))}
         </div>
       </section>
 
       {/* WHY CHOOSE US */}
       <section className="py-24 px-6 bg-black text-center">
-        <h2 className="text-3xl md:text-4xl mb-4">The YourLimo Difference</h2>
-        <p className="text-gray-400 mb-16 max-w-2xl mx-auto">
-          What sets us apart from every other ride service.
-        </p>
+        <FadeIn>
+          <h2 className="text-3xl md:text-4xl mb-4">The YourLimo Difference</h2>
+          <p className="text-gray-400 mb-16 max-w-2xl mx-auto">
+            What sets us apart from every other ride service.
+          </p>
+        </FadeIn>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto text-left">
           {[
             { title: "24/7 Availability", desc: "On-demand service any time, any day of the week." },
@@ -137,36 +149,41 @@ export default function Home() {
             { title: "Immaculate Vehicles", desc: "Every vehicle is detailed before every single trip." },
             { title: "VIP Experience", desc: "Water, Wi-Fi, and premium amenities on every ride." },
             { title: "Safe & Reliable", desc: "Fully insured and GPS-tracked for total peace of mind." },
-          ].map((item) => (
-            <div
-              key={item.title}
-              className="flex items-start gap-4 border border-border rounded-lg p-6 hover:border-gold transition-all duration-300"
-            >
-              <div className="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center text-gold shrink-0">
-                ✓
+          ].map((item, i) => (
+            <FadeIn key={item.title} delay={(i % 3) * 100}>
+              <div className="flex items-start gap-4 border border-border rounded-lg p-6 hover:border-gold hover:-translate-y-1 transition-all duration-300">
+                <div className="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center text-gold shrink-0">
+                  ✓
+                </div>
+                <div>
+                  <h4 className="text-white font-medium mb-1">{item.title}</h4>
+                  <p className="text-gray-400 text-sm">{item.desc}</p>
+                </div>
               </div>
-              <div>
-                <h4 className="text-white font-medium mb-1">{item.title}</h4>
-                <p className="text-gray-400 text-sm">{item.desc}</p>
-              </div>
-            </div>
+            </FadeIn>
           ))}
         </div>
       </section>
+
       {/* PRICE CALCULATOR */}
       <section className="py-24 px-6 bg-black text-center">
-        <h2 className="text-3xl md:text-4xl mb-4">Fare Calculator</h2>
-        <p className="text-gray-400 mb-16 max-w-2xl mx-auto">
-          Get an accurate price estimate for your trip.
-        </p>
+        <FadeIn>
+          <h2 className="text-3xl md:text-4xl mb-4">Fare Calculator</h2>
+          <p className="text-gray-400 mb-16 max-w-2xl mx-auto">
+            Get an accurate price estimate for your trip.
+          </p>
+        </FadeIn>
         <PriceCalculator />
       </section>
-{/* SERVICE AREA */}
+
+      {/* SERVICE AREA */}
       <section className="py-24 px-6 bg-card text-center">
-        <h2 className="text-3xl md:text-4xl mb-4">Service Area</h2>
-        <p className="text-gray-400 mb-16 max-w-2xl mx-auto">
-          Ontario-Wide Coverage, headquartered in the Niagara Region.
-        </p>
+        <FadeIn>
+          <h2 className="text-3xl md:text-4xl mb-4">Service Area</h2>
+          <p className="text-gray-400 mb-16 max-w-2xl mx-auto">
+            Ontario-Wide Coverage, headquartered in the Niagara Region.
+          </p>
+        </FadeIn>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-6xl mx-auto text-left">
           {/* Map placeholder */}
@@ -227,26 +244,31 @@ export default function Home() {
           </div>
         </div>
       </section>
+
       {/* FLEET PREVIEW */}
       <section className="py-24 px-6 bg-dark-grey text-center">
-        <h2 className="text-3xl md:text-4xl mb-4">Our Fleet</h2>
-        <p className="text-gray-400 mb-16 max-w-2xl mx-auto">
-          A curated selection of premium vehicles, maintained to the highest standard.
-        </p>
-        <a
-          href="/fleet"
-          className="border border-gold text-gold px-8 py-3 rounded-full uppercase tracking-widest text-sm hover:bg-gold hover:text-black transition-all duration-300"
-        >
-          View Fleet
-        </a>
+        <FadeIn>
+          <h2 className="text-3xl md:text-4xl mb-4">Our Fleet</h2>
+          <p className="text-gray-400 mb-16 max-w-2xl mx-auto">
+            A curated selection of premium vehicles, maintained to the highest standard.
+          </p>
+          <a
+            href="/fleet"
+            className="border border-gold text-gold px-8 py-3 rounded-full uppercase tracking-widest text-sm hover:bg-gold hover:text-black transition-all duration-300"
+          >
+            View Fleet
+          </a>
+        </FadeIn>
       </section>
 
       {/* TESTIMONIALS */}
       <section className="py-24 px-6 bg-card text-center">
-        <h2 className="text-3xl md:text-4xl mb-4">What Our Clients Say</h2>
-        <p className="text-gray-400 mb-16 max-w-2xl mx-auto">
-          Real experiences from real clients across Ontario.
-        </p>
+        <FadeIn>
+          <h2 className="text-3xl md:text-4xl mb-4">What Our Clients Say</h2>
+          <p className="text-gray-400 mb-16 max-w-2xl mx-auto">
+            Real experiences from real clients across Ontario.
+          </p>
+        </FadeIn>
         <Testimonials />
       </section>
     </main>

@@ -5,6 +5,7 @@ import Footer from "./components/Footer";
 import IntroSplash from "./components/IntroSplash";
 import WhatsAppButton from "./components/WhatsAppButton";
 import MobileTabBar from "./components/MobileTabBar";
+import PageTransition from "./components/PageTransition";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-display",
@@ -31,13 +32,13 @@ export default function RootLayout({ children }) {
       className={`${cormorant.variable} ${inter.variable} h-full antialiased`}
       data-scroll-behavior="smooth"
     >
-      <body className="min-h-full flex flex-col bg-black text-white">
-        <IntroSplash />
-        <Navbar />
-        {children}
+<body className="min-h-full flex flex-col bg-black text-white pb-16 lg:pb-0">
+       <IntroSplash />
+       <Navbar />
+<PageTransition>{children}</PageTransition>
+<Footer />
         <WhatsAppButton />
         <MobileTabBar />
-        <Footer />
       </body>
     </html>
   );
