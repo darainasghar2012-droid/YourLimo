@@ -6,8 +6,7 @@ export default function GoldParticles() {
   const [particles, setParticles] = useState([]);
 
   useEffect(() => {
-    const generated = Array.from({ length: 25 }, (_, i) => ({
-      id: i,
+const generated = Array.from({ length: 12 }, (_, i) => ({      id: i,
       left: Math.random() * 100,
       size: Math.random() * 3 + 1,
       duration: Math.random() * 10 + 10,
