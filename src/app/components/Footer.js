@@ -15,8 +15,8 @@ export default function Footer() {
           <h4 className="text-gold uppercase text-sm tracking-widest mb-3">
             Contact
           </h4>
-          <p className="text-sm">Phone: (123) 456-7890</p>
-          <p className="text-sm">Email: info@yourlimo.ca</p>
+          <p className="text-sm">Phone: (647) 833-3003</p>
+          <p className="text-sm">Email: YourEliteLimo@hotmail.com</p>
         </div>
 
         <div>
