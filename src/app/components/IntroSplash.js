@@ -28,8 +28,9 @@ export default function IntroSplash() {
   if (!visible) return null;
 
   return (
-    <div
-className={`fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-gradient-to-b from-black to-card px-6 transition-all duration-500 ${        fadeOut ? "opacity-0 scale-95 -translate-y-4" : "opacity-100 scale-100"
+   <div
+      className={`fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-gradient-to-b from-black to-card px-6 transition-opacity duration-500 ${
+        fadeOut ? "opacity-0" : "opacity-100"
       }`}
     >
       <p className="text-gold italic text-lg md:text-2xl mb-2 tracking-wide">

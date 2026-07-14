@@ -6,13 +6,18 @@ export default function GoldParticles() {
   const [particles, setParticles] = useState([]);
 
   useEffect(() => {
-const generated = Array.from({ length: 8 }, (_, i) => ({      left: Math.random() * 100,
-      size: Math.random() * 3 + 1,
-      duration: Math.random() * 10 + 10,
-      delay: Math.random() * 10,
-      opacity: Math.random() * 0.5 + 0.2,
-    }));
-    setParticles(generated);
+    const timeout = setTimeout(() => {
+      const generated = Array.from({ length: 8 }, (_, i) => ({
+        id: i,
+        left: Math.random() * 100,
+        size: Math.random() * 3 + 1,
+        duration: Math.random() * 10 + 10,
+        delay: Math.random() * 10,
+        opacity: Math.random() * 0.5 + 0.2,
+      }));
+      setParticles(generated);
+    }, 800);
+    return () => clearTimeout(timeout);
   }, []);
 
   return (
