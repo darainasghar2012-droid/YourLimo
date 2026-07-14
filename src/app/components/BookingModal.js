@@ -3,17 +3,21 @@
 import { useState } from "react";
 import { createPortal } from "react-dom";
 import emailjs from "@emailjs/browser";
-import AddressInput from "./AddressInput";
+import AddressInput, { loadGoogleMapsScript } from "./AddressInput";
 
 const vehicles = [
-  { name: "Cadillac Escalade", tag: "Flagship SUV", passengers: 7, deposit: 50 },
-  { name: "GMC Yukon Denali", tag: "Most Popular", passengers: 7, deposit: 50 },
-  { name: "Chevrolet Suburban", tag: "Group SUV", passengers: 7, deposit: 45 },
-  { name: "Lincoln Navigator", tag: "Ultra-Luxury SUV", passengers: 7, deposit: 50 },
-  { name: "Mercedes-Benz E-Class", tag: "Executive Sedan", passengers: 4, deposit: 40 },
-  { name: "BMW 5 Series", tag: "Sport Executive", passengers: 4, deposit: 40 },
-  { name: "Mercedes-Benz S-Class", tag: "Pinnacle Sedan", passengers: 4, deposit: 60 },
+  { name: "Cadillac Escalade", tag: "Flagship SUV", passengers: 7, ratePerKm: 3.5, hourlyRate: 120 },
+  { name: "GMC Yukon Denali", tag: "Most Popular", passengers: 7, ratePerKm: 3.25, hourlyRate: 120 },
+  { name: "Chevrolet Suburban", tag: "Group SUV", passengers: 7, ratePerKm: 3.0, hourlyRate: 120 },
+  { name: "Lincoln Navigator", tag: "Ultra-Luxury SUV", passengers: 7, ratePerKm: 3.5, hourlyRate: 120 },
+  { name: "Mercedes-Benz E-Class", tag: "Executive Sedan", passengers: 4, ratePerKm: 2.75, hourlyRate: 120 },
+  { name: "BMW 5 Series", tag: "Sport Executive", passengers: 4, ratePerKm: 2.75, hourlyRate: 120 },
+  { name: "Mercedes-Benz S-Class", tag: "Pinnacle Sedan", passengers: 4, ratePerKm: 4.0, hourlyRate: 160 },
 ];
+
+const TIP_RATE = 0.10;
+const HST_RATE = 0.13;
+const MIN_HOURS = 3;
 
 export default function BookingModal({ onClose }) {
   const [step, setStep] = useState(1);
@@ -29,8 +33,54 @@ export default function BookingModal({ onClose }) {
   const [notes, setNotes] = useState("");
   const [sending, setSending] = useState(false);
   const [done, setDone] = useState(false);
+  const [distanceKm, setDistanceKm] = useState(null);
+  const [calculatingDistance, setCalculatingDistance] = useState(false);
 
-function handleSubmit(e) {
+  function calculateDistance() {
+    if (!pickup || !dropoff) return;
+    setCalculatingDistance(true);
+
+    loadGoogleMapsScript().then(() => {
+      const service = new window.google.maps.DistanceMatrixService();
+      service.getDistanceMatrix(
+        {
+          origins: [pickup],
+          destinations: [dropoff],
+          travelMode: window.google.maps.TravelMode.DRIVING,
+        },
+        (response, status) => {
+          setCalculatingDistance(false);
+          if (status === "OK" && response.rows[0]?.elements[0]?.status === "OK") {
+            const meters = response.rows[0].elements[0].distance.value;
+            setDistanceKm(meters / 1000);
+          } else {
+            setDistanceKm(null);
+          }
+        }
+      );
+    });
+  }
+
+  function getSubtotal() {
+    if (!vehicle) return 0;
+    if (distanceKm) {
+      return distanceKm * vehicle.ratePerKm;
+    }
+    return MIN_HOURS * vehicle.hourlyRate;
+  }
+
+  function getTotal() {
+    const subtotal = getSubtotal();
+    const tip = subtotal * TIP_RATE;
+    const hst = (subtotal + tip) * HST_RATE;
+    return subtotal + tip + hst;
+  }
+
+  function getDeposit() {
+    return Math.round(getTotal() * 0.2 * 100) / 100;
+  }
+
+  function handleSubmit(e) {
     e.preventDefault();
     setSending(true);
 
@@ -60,7 +110,7 @@ function handleSubmit(e) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         vehicleName: vehicle?.name,
-        depositAmount: vehicle?.deposit,
+        depositAmount: getDeposit(),
         customerEmail: email,
         pickup,
         dropoff,
@@ -170,21 +220,17 @@ function handleSubmit(e) {
           <div>
             <h3 className="text-2xl mb-6 text-center">Trip Details</h3>
             <div className="flex flex-col gap-4 mb-6">
-              <input
-                type="text"
+              <AddressInput
                 placeholder="Pickup Location"
                 value={pickup}
-                onChange={(e) => setPickup(e.target.value)}
+                onChange={setPickup}
                 required
-                className="bg-card border border-border rounded-md px-4 py-3 focus:border-gold outline-none"
               />
-              <input
-                type="text"
+              <AddressInput
                 placeholder="Dropoff Location"
                 value={dropoff}
-                onChange={(e) => setDropoff(e.target.value)}
+                onChange={setDropoff}
                 required
-                className="bg-card border border-border rounded-md px-4 py-3 focus:border-gold outline-none"
               />
               <div className="grid grid-cols-2 gap-4">
                 <input
@@ -228,8 +274,11 @@ function handleSubmit(e) {
                 Back
               </button>
               <button
-                disabled={!pickup || !dropoff || !date || !time}
-                onClick={() => setStep(3)}
+                disabled={!pickup || !dropoff || !date || !time || calculatingDistance}
+                onClick={() => {
+                  calculateDistance();
+                  setStep(3);
+                }}
                 className="flex-1 border border-gold text-gold px-8 py-3 rounded-full uppercase tracking-widest text-sm hover:bg-gold hover:text-black transition-all duration-300 disabled:opacity-30"
               >
                 Continue
@@ -272,9 +321,32 @@ function handleSubmit(e) {
                 <p><span className="text-gold">To:</span> {dropoff}</p>
                 <p><span className="text-gold">Date/Time:</span> {date} at {time}</p>
                 <p><span className="text-gold">Passengers:</span> {passengers}</p>
-                <div className="border-t border-border mt-3 pt-3 flex justify-between items-center">
-                  <span className="text-gold uppercase tracking-widest text-xs">Deposit Due Now</span>
-                  <span className="text-gold text-xl font-bold">${vehicle?.deposit} CAD</span>
+                {distanceKm && (
+                  <p className="text-xs text-gray-500 mt-2">
+                    Estimated distance: {distanceKm.toFixed(1)} km
+                  </p>
+                )}
+                <div className="border-t border-border mt-3 pt-3 space-y-1.5">
+                  <div className="flex justify-between text-xs text-gray-400">
+                    <span>Subtotal</span>
+                    <span>${getSubtotal().toFixed(2)}</span>
+                  </div>
+                  <div className="flex justify-between text-xs text-gray-400">
+                    <span>Gratuity (10%)</span>
+                    <span>${(getSubtotal() * TIP_RATE).toFixed(2)}</span>
+                  </div>
+                  <div className="flex justify-between text-xs text-gray-400">
+                    <span>HST (13%)</span>
+                    <span>${((getSubtotal() + getSubtotal() * TIP_RATE) * HST_RATE).toFixed(2)}</span>
+                  </div>
+                  <div className="flex justify-between text-sm text-white font-medium pt-1.5 border-t border-border">
+                    <span>Estimated Total</span>
+                    <span>${getTotal().toFixed(2)}</span>
+                  </div>
+                  <div className="flex justify-between items-center pt-2">
+                    <span className="text-gold uppercase tracking-widest text-xs">Deposit Due Now (20%)</span>
+                    <span className="text-gold text-xl font-bold">${getDeposit().toFixed(2)} CAD</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -291,7 +363,7 @@ function handleSubmit(e) {
                 disabled={sending}
                 className="flex-1 border border-gold text-gold px-8 py-3 rounded-full uppercase tracking-widest text-sm hover:bg-gold hover:text-black transition-all duration-300 disabled:opacity-50"
               >
-                {sending ? "Redirecting to payment..." : `Pay $${vehicle?.deposit} Deposit`}
+                {sending ? "Redirecting to payment..." : `Pay $${getDeposit().toFixed(2)} Deposit`}
               </button>
             </div>
           </form>

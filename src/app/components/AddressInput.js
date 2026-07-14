@@ -2,9 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 
-let scriptLoadingPromise = null;
+export let scriptLoadingPromise = null;
 
-function loadGoogleMapsScript() {
+export function loadGoogleMapsScript() {
   if (window.google) return Promise.resolve();
   if (scriptLoadingPromise) return scriptLoadingPromise;
 
