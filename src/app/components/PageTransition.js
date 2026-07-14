@@ -21,7 +21,7 @@ export default function PageTransition({ children }) {
       setTimeout(() => {
         router.push(href);
         setTimeout(() => setOverlayVisible(false), 50);
-      }, 250);
+      }, 150);
     }
 
     document.addEventListener("click", handleClick);
@@ -31,8 +31,7 @@ export default function PageTransition({ children }) {
   return (
     <>
       <div
-        className={`fixed inset-0 bg-black z-[200] pointer-events-none transition-opacity duration-250 ${
-          overlayVisible ? "opacity-100" : "opacity-0"
+className={`fixed inset-0 bg-black z-[200] pointer-events-none transition-opacity duration-150 ${          overlayVisible ? "opacity-100" : "opacity-0"
         }`}
       />
       {children}
