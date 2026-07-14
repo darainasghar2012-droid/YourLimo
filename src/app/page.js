@@ -20,7 +20,7 @@ export default function Home() {
         {/* Dark overlay for text legibility */}
         <div className="absolute inset-0 bg-black/65" />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
-<GoldParticles />
+        <GoldParticles />
         <div className="relative z-10 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center w-full">
           {/* Left: Headline */}
           <div className="text-center md:text-left">
@@ -74,7 +74,7 @@ export default function Home() {
               </p>
               <h3 className="text-2xl mb-6">Book Your Ride</h3>
               <a
-              href="/contact"
+                href="/contact"
                 className="shine-button block text-center border border-gold text-gold px-6 py-3 rounded-full uppercase tracking-widest text-sm hover:bg-gold hover:text-black transition-all duration-300"
               >
                 Request a Quote
@@ -187,9 +187,18 @@ export default function Home() {
         </FadeIn>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-6xl mx-auto text-left">
-          {/* Map placeholder */}
-          <div className="md:col-span-2 h-[420px] rounded-lg border border-border bg-black flex items-center justify-center">
-            <p className="text-gray-600 text-sm">Map Coming Soon</p>
+          {/* Map */}
+          <div className="md:col-span-2 h-[420px] rounded-lg border border-border overflow-hidden">
+            <iframe
+              title="YourLimo Service Area Map"
+              width="100%"
+              height="100%"
+              style={{ border: 0, filter: "invert(90%) hue-rotate(180deg) contrast(90%)" }}
+              loading="lazy"
+              allowFullScreen
+              referrerPolicy="no-referrer-when-downgrade"
+              src={`https://www.google.com/maps/embed/v1/place?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY}&q=Niagara+Falls,Ontario,Canada&zoom=9`}
+            />
           </div>
 
           {/* Right column */}
