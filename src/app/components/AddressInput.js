@@ -41,6 +41,24 @@ export default function AddressInput({ placeholder, value, onChange, required })
         onChange(place.formatted_address);
       }
     });
+
+    // Force dark styling directly, since Google injects this dropdown
+    // outside our normal component tree and CSS can lag behind it.
+    const styleInterval = setInterval(() => {
+      const container = document.querySelector(".pac-container");
+      if (container) {
+        container.style.backgroundColor = "#0a0a0a";
+        container.style.border = "1px solid rgba(201, 164, 76, 0.3)";
+        container.style.color = "#f5f5f5";
+
+        document.querySelectorAll(".pac-item").forEach((item) => {
+          item.style.backgroundColor = "#0a0a0a";
+          item.style.color = "#f5f5f5";
+        });
+      }
+    }, 300);
+
+    return () => clearInterval(styleInterval);
   }, [scriptLoaded]);
 
   return (
