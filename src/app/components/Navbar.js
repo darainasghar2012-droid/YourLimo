@@ -58,9 +58,9 @@ export default function Navbar() {
           >
             (647) 833-3003
           </a>
-          <button
+         <button
             onClick={() => setModalOpen(true)}
-            className="border border-gold text-gold px-5 py-2 rounded-full uppercase tracking-widest text-xs hover:bg-gold hover:text-black transition-all duration-300"
+            className="shine-button border border-gold text-gold px-5 py-2 rounded-full uppercase tracking-widest text-xs hover:bg-gold hover:text-black transition-all duration-300"
           >
             Book Now
           </button>

@@ -12,24 +12,26 @@ export default function MobileTabBar() {
   const tabs = [
     { name: "Home", href: "/", icon: "🏠" },
     { name: "Fleet", href: "/fleet", icon: "🚙" },
+  ];
+
+  const tabs2 = [
     { name: "Contact", href: "/contact", icon: "💬" },
   ];
 
   return (
     <>
       <nav
-        className="lg:hidden fixed bottom-0 left-0 w-full z-40 bg-black backdrop-blur-md border-t border-border"
-        style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
+        className="lg:hidden fixed bottom-4 left-1/2 -translate-x-1/2 z-40 bg-black/95 backdrop-blur-md border border-gold/30 rounded-full shadow-[0_8px_30px_rgba(0,0,0,0.6)]"
       >
-        <div className="flex justify-around items-center py-3">
-          {tabs.slice(0, 2).map((tab) => {
+        <div className="flex items-center gap-3 px-7 py-2.5">
+          {tabs.map((tab) => {
             const active = pathname === tab.href;
             return (
               <Link
                 key={tab.name}
                 href={tab.href}
-                className={`flex flex-col items-center gap-1 text-xs transition-colors duration-300 ${
-                  active ? "text-gold" : "text-gray-500"
+                className={`flex flex-col items-center justify-center gap-0.5 px-4 py-2 rounded-full text-[10px] transition-all duration-300 hover:scale-110 hover:-translate-y-1 active:scale-95 ${
+                  active ? "text-gold bg-gold/10" : "text-gray-500"
                 }`}
               >
                 <span className="text-lg">{tab.icon}</span>
@@ -40,20 +42,20 @@ export default function MobileTabBar() {
 
           <button
             onClick={() => setModalOpen(true)}
-            className="flex flex-col items-center gap-1 text-xs text-gray-500 transition-colors duration-300"
+            className="flex flex-col items-center justify-center gap-0.5 px-4 py-2 mx-1 rounded-full bg-gold text-black text-[10px] font-medium transition-all duration-300 hover:scale-110 hover:-translate-y-1 active:scale-95 shadow-[0_0_15px_rgba(201,164,76,0.5)]"
           >
             <span className="text-lg">📅</span>
             Book
           </button>
 
-          {tabs.slice(2).map((tab) => {
+          {tabs2.map((tab) => {
             const active = pathname === tab.href;
             return (
               <Link
                 key={tab.name}
                 href={tab.href}
-                className={`flex flex-col items-center gap-1 text-xs transition-colors duration-300 ${
-                  active ? "text-gold" : "text-gray-500"
+                className={`flex flex-col items-center justify-center gap-0.5 px-4 py-2 rounded-full text-[10px] transition-all duration-300 hover:scale-110 hover:-translate-y-1 active:scale-95 ${
+                  active ? "text-gold bg-gold/10" : "text-gray-500"
                 }`}
               >
                 <span className="text-lg">{tab.icon}</span>

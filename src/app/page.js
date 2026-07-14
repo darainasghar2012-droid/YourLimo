@@ -2,6 +2,7 @@ import MovingLimo from "./components/MovingLimo";
 import Testimonials from "./components/Testimonials";
 import PriceCalculator from "./components/PriceCalculator";
 import FadeIn from "./components/FadeIn";
+import GoldParticles from "./components/GoldParticles";
 
 export default function Home() {
   return (
@@ -19,7 +20,7 @@ export default function Home() {
         {/* Dark overlay for text legibility */}
         <div className="absolute inset-0 bg-black/65" />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
-
+<GoldParticles />
         <div className="relative z-10 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center w-full">
           {/* Left: Headline */}
           <div className="text-center md:text-left">
@@ -73,8 +74,8 @@ export default function Home() {
               </p>
               <h3 className="text-2xl mb-6">Book Your Ride</h3>
               <a
-                href="/contact"
-                className="block text-center border border-gold text-gold px-6 py-3 rounded-full uppercase tracking-widest text-sm hover:bg-gold hover:text-black transition-all duration-300"
+              href="/contact"
+                className="shine-button block text-center border border-gold text-gold px-6 py-3 rounded-full uppercase tracking-widest text-sm hover:bg-gold hover:text-black transition-all duration-300"
               >
                 Request a Quote
               </a>
