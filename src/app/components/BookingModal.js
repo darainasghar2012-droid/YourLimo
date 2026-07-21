@@ -248,13 +248,17 @@ export default function BookingModal({ onClose }) {
                   className="bg-card border border-border rounded-md px-4 py-3 focus:border-gold outline-none"
                 />
               </div>
-              <input
+             <input
                 type="number"
                 min="1"
                 max={vehicle?.passengers}
-                placeholder="Passengers"
+                placeholder={`Passengers (max ${vehicle?.passengers})`}
                 value={passengers}
-                onChange={(e) => setPassengers(e.target.value)}
+                onChange={(e) => {
+                  const val = parseInt(e.target.value) || 1;
+                  const clamped = Math.min(val, vehicle?.passengers || 99);
+                  setPassengers(clamped);
+                }}
                 required
                 className="bg-card border border-border rounded-md px-4 py-3 focus:border-gold outline-none"
               />
