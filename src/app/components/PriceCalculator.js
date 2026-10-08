@@ -42,7 +42,7 @@ export default function PriceCalculator() {
   function handleEmail(e) {
     e.preventDefault();
     const subject = "Quote Request - YourLimo";
-    window.location.href = `mailto:YourEliteLimo@hotmail.com?subject=${encodeURIComponent(
+    window.location.href = `mailto:info@YourLimo.ca?subject=${encodeURIComponent(
       subject
     )}&body=${buildMessage().replace(/%0A/g, "\n")}`;
   }

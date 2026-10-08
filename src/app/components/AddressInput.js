@@ -42,18 +42,17 @@ export default function AddressInput({ placeholder, value, onChange, required })
       }
     });
 
-    // Force dark styling directly, since Google injects this dropdown
-    // outside our normal component tree and CSS can lag behind it.
+    // Google injects this dropdown outside the normal component tree.
     const styleInterval = setInterval(() => {
       const container = document.querySelector(".pac-container");
       if (container) {
-        container.style.backgroundColor = "#0a0a0a";
-        container.style.border = "1px solid rgba(201, 164, 76, 0.3)";
-        container.style.color = "#f5f5f5";
+        container.style.backgroundColor = "#F5EBDD";
+        container.style.border = "1px solid rgba(107, 66, 38, 0.3)";
+        container.style.color = "#3B2314";
 
         document.querySelectorAll(".pac-item").forEach((item) => {
-          item.style.backgroundColor = "#0a0a0a";
-          item.style.color = "#f5f5f5";
+          item.style.backgroundColor = "#F5EBDD";
+          item.style.color = "#3B2314";
         });
       }
     }, 300);

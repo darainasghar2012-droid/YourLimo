@@ -45,7 +45,7 @@ export default function Contact() {
   }
 
   return (
-    <main className="flex-1 pt-32 pb-24 px-6 bg-black">
+    <main className="flex-1 pt-32 pb-24 px-6 bg-warm-surface">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl mb-4">Get in Touch</h1>
@@ -76,8 +76,8 @@ export default function Contact() {
               </div>
               <div>
                 <p className="text-gray-400 text-xs uppercase tracking-widest mb-1">Email</p>
-                <a href="mailto:YourEliteLimo@hotmail.com" className="text-white hover:text-gold transition-colors">
-                  YourEliteLimo@hotmail.com
+                <a href="mailto:info@YourLimo.ca" className="text-white hover:text-gold transition-colors">
+                  info@YourLimo.ca
                 </a>
               </div>
             </div>

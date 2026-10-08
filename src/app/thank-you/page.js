@@ -1,6 +1,6 @@
 export default function ThankYou() {
   return (
-    <main className="flex-1 pt-40 pb-24 px-6 bg-black text-center">
+    <main className="flex-1 pt-40 pb-24 px-6 bg-warm-surface text-center">
       <div className="max-w-xl mx-auto">
         <div className="w-16 h-16 rounded-full bg-gold/10 text-gold text-3xl flex items-center justify-center mx-auto mb-6">
           ✓

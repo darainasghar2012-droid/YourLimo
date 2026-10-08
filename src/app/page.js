@@ -85,7 +85,7 @@ export default function Home() {
       </section>
 
       {/* TRUST BAR */}
-      <section className="bg-black border-y border-border py-10 px-6">
+      <section className="bg-warm-surface border-y border-border py-10 px-6">
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
           {[
             { icon: "🕐", title: "24/7 Availability", desc: "On-demand service any time, any day" },
@@ -110,7 +110,7 @@ export default function Home() {
       <MovingLimo />
 
       {/* SERVICES PREVIEW */}
-      <section className="py-24 px-6 bg-black text-center">
+      <section className="py-24 px-6 bg-warm-surface text-center">
         <FadeIn>
           <h2 className="text-3xl md:text-4xl mb-4">Our Services</h2>
           <p className="text-gray-400 mb-16 max-w-2xl mx-auto">
@@ -135,7 +135,7 @@ export default function Home() {
       </section>
 
       {/* WHY CHOOSE US */}
-      <section className="py-24 px-6 bg-black text-center">
+      <section className="py-24 px-6 bg-background text-center">
         <FadeIn>
           <h2 className="text-3xl md:text-4xl mb-4">The YourLimo Difference</h2>
           <p className="text-gray-400 mb-16 max-w-2xl mx-auto">
@@ -167,7 +167,7 @@ export default function Home() {
       </section>
 
       {/* PRICE CALCULATOR */}
-      <section className="py-24 px-6 bg-black text-center">
+      <section className="py-24 px-6 bg-warm-surface text-center">
         <FadeIn>
           <h2 className="text-3xl md:text-4xl mb-4">Fare Calculator</h2>
           <p className="text-gray-400 mb-16 max-w-2xl mx-auto">
@@ -256,7 +256,7 @@ export default function Home() {
       </section>
 
       {/* FLEET PREVIEW */}
-      <section className="py-24 px-6 bg-dark-grey text-center">
+      <section className="py-24 px-6 bg-warm-surface text-center">
         <FadeIn>
           <h2 className="text-3xl md:text-4xl mb-4">Our Fleet</h2>
           <p className="text-gray-400 mb-16 max-w-2xl mx-auto">

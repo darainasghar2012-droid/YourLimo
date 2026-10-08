@@ -1,6 +1,6 @@
 export default function About() {
   return (
-    <main className="flex-1 pt-32 pb-24 px-6 bg-black">
+    <main className="flex-1 pt-32 pb-24 px-6 bg-warm-surface">
       <div className="max-w-3xl mx-auto text-center">
         <h1 className="text-4xl md:text-5xl mb-6">About YourLimo</h1>
         <p className="text-gray-400 mb-6 leading-relaxed">

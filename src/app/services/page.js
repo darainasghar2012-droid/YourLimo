@@ -33,7 +33,7 @@ const services = [
 
 export default function Services() {
   return (
-    <main className="flex-1 pt-32 pb-24 px-6 bg-black">
+    <main className="flex-1 pt-32 pb-24 px-6 bg-warm-surface">
       <div className="max-w-6xl mx-auto text-center">
         <h1 className="text-4xl md:text-5xl mb-4">Our Services</h1>
         <p className="text-gray-400 max-w-2xl mx-auto mb-16">

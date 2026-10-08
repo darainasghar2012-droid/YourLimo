@@ -28,22 +28,22 @@ export default function Navbar() {
     <header
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-black/95 backdrop-blur-md border-b border-border shadow-lg"
-          : "bg-black/70 backdrop-blur-sm border-b border-transparent"
+          ? "bg-[#3B2314]/95 backdrop-blur-md border-b border-[#8B5E3C] shadow-lg"
+          : "bg-[#3B2314]/85 backdrop-blur-sm border-b border-transparent"
       }`}
     >
-      <nav className="flex items-center justify-between px-6 py-4 max-w-7xl mx-auto">
+      <nav className="flex items-center justify-between px-6 py-4 max-w-7xl mx-auto text-[#FAF3E8]">
         <Link href="/" className="text-xl font-bold tracking-widest uppercase">
-          YOUR<span className="text-gold">LIMO</span>
+          YOUR<span className="text-[#C9A27A]">LIMO</span>
         </Link>
 
         {/* Desktop links */}
-        <div className="hidden md:flex gap-8 text-sm uppercase tracking-widest text-white/70">
+        <div className="hidden md:flex gap-8 text-sm uppercase tracking-widest text-[#F5EBDD]">
           {links.map((link) => (
             <Link
               key={link.name}
               href={link.href}
-              className="hover:text-gold transition-colors duration-300"
+              className="hover:text-[#C9A27A] transition-colors duration-300"
             >
               {link.name}
             </Link>
@@ -54,13 +54,13 @@ export default function Navbar() {
         <div className="hidden md:flex items-center gap-4">
           <a
             href="tel:+16478333003"
-            className="text-sm text-white/70 hover:text-gold transition-colors duration-300"
+            className="text-sm text-[#F5EBDD] hover:text-[#C9A27A] transition-colors duration-300"
           >
             (647) 833-3003
           </a>
          <button
             onClick={() => setModalOpen(true)}
-            className="shine-button border border-gold text-gold px-5 py-2 rounded-full uppercase tracking-widest text-xs hover:bg-gold hover:text-black transition-all duration-300"
+            className="shine-button border border-[#C9A27A] bg-[#C9A27A] text-[#3B2314] px-5 py-2 rounded-full uppercase tracking-widest text-xs hover:bg-[#E2C8A8] hover:text-[#3B2314] transition-all duration-300"
           >
             Book Now
           </button>
@@ -68,7 +68,7 @@ export default function Navbar() {
 
         {/* Mobile menu button */}
         <button
-          className="md:hidden text-gold text-2xl"
+          className="md:hidden text-[#C9A27A] text-2xl"
           onClick={() => setMenuOpen(!menuOpen)}
         >
           {menuOpen ? "✕" : "☰"}
@@ -77,12 +77,12 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="md:hidden flex flex-col items-center gap-6 py-6 bg-black border-t border-border">
+        <div className="md:hidden flex flex-col items-center gap-6 py-6 bg-[#3B2314] border-t border-[#8B5E3C]">
           {links.map((link) => (
             <Link
               key={link.name}
               href={link.href}
-              className="text-sm uppercase tracking-widest text-white/70 hover:text-gold"
+              className="text-sm uppercase tracking-widest text-[#F5EBDD] hover:text-[#C9A27A]"
               onClick={() => setMenuOpen(false)}
             >
               {link.name}
@@ -90,7 +90,7 @@ export default function Navbar() {
           ))}
           <a
             href="tel:+16478333003"
-            className="text-sm text-white/70 hover:text-gold"
+            className="text-sm text-[#F5EBDD] hover:text-[#C9A27A]"
           >
             (647) 833-3003
           </a>
@@ -99,7 +99,7 @@ export default function Navbar() {
               setModalOpen(true);
               setMenuOpen(false);
             }}
-            className="border border-gold text-gold px-6 py-2 rounded-full uppercase tracking-widest text-xs hover:bg-gold hover:text-black transition-all duration-300"
+            className="border border-[#C9A27A] bg-[#C9A27A] text-[#3B2314] px-6 py-2 rounded-full uppercase tracking-widest text-xs hover:bg-[#E2C8A8] hover:text-[#3B2314] transition-all duration-300"
           >
             Book Now
           </button>
