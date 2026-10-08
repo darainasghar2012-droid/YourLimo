@@ -17,13 +17,11 @@ export default function Home() {
               "url('https://media.base44.com/images/public/69d46fab088f7d4b08dcce00/9a62969fe_generated_image.png')",
           }}
         />
-        {/* Dark overlay for text legibility */}
-        <div className="absolute inset-0 bg-black/65" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
+        <div className="hero-image-fade absolute inset-0" />
         <GoldParticles />
         <div className="relative z-10 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center w-full">
           {/* Left: Headline */}
-          <div className="text-center md:text-left">
+          <div className="rounded-2xl border border-[#6B4226]/50 bg-[#FAF3E8]/75 p-6 backdrop-blur-sm text-center md:p-8 md:text-left">
             <FadeIn>
               <p className="text-gold uppercase tracking-[0.2em] text-sm mb-4 flex items-center gap-2 justify-center md:justify-start">
                 <span className="w-8 h-px bg-gold inline-block" />
@@ -43,15 +41,15 @@ export default function Home() {
             {/* Stats grid */}
             <FadeIn delay={200}>
               <div className="grid grid-cols-3 gap-4 mb-8 max-w-md mx-auto md:mx-0">
-                <div className="border border-border rounded-lg py-4 text-center">
+                <div className="border border-[#6B4226]/70 bg-[#FAF3E8]/45 rounded-lg py-4 text-center">
                   <p className="text-gold text-xl font-bold">24/7</p>
                   <p className="text-xs text-gray-400 uppercase tracking-wide">Available</p>
                 </div>
-                <div className="border border-border rounded-lg py-4 text-center">
+                <div className="border border-[#6B4226]/70 bg-[#FAF3E8]/45 rounded-lg py-4 text-center">
                   <p className="text-gold text-xl font-bold">7+</p>
                   <p className="text-xs text-gray-400 uppercase tracking-wide">Vehicles</p>
                 </div>
-                <div className="border border-border rounded-lg py-4 text-center">
+                <div className="border border-[#6B4226]/70 bg-[#FAF3E8]/45 rounded-lg py-4 text-center">
                   <p className="text-gold text-xl font-bold">100%</p>
                   <p className="text-xs text-gray-400 uppercase tracking-wide">On-Time</p>
                 </div>
@@ -68,7 +66,7 @@ export default function Home() {
 
           {/* Right: Quote Request CTA (simplified for now) */}
           <FadeIn delay={300}>
-            <div className="bg-black/80 backdrop-blur-md border border-gold/30 rounded-xl p-8">
+            <div className="bg-[#FAF3E8]/75 backdrop-blur-md border border-[#6B4226]/50 rounded-xl p-8">
               <p className="text-gold uppercase tracking-widest text-xs mb-2">
                 Instant Quote
               </p>

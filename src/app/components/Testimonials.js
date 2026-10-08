@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import emailjs from "@emailjs/browser";
 
 const reviews = [
   {
@@ -27,6 +28,50 @@ const reviews = [
 
 export default function Testimonials() {
   const [active, setActive] = useState(0);
+  const [reviewOpen, setReviewOpen] = useState(false);
+  const [reviewSubmitted, setReviewSubmitted] = useState(false);
+  const [reviewSending, setReviewSending] = useState(false);
+  const [reviewError, setReviewError] = useState(false);
+  const [rating, setRating] = useState(0);
+
+  function handleReviewSubmit(event) {
+    event.preventDefault();
+    if (!rating) {
+      setReviewError(true);
+      return;
+    }
+
+    setReviewSending(true);
+    setReviewError(false);
+    const formData = new FormData(event.currentTarget);
+
+    emailjs
+      .send(
+        "service_95rcxko",
+        "template_w1x456m",
+        {
+          name: formData.get("name") || "Website visitor",
+          email: formData.get("email") || "Not provided",
+          phone: "Website review submission",
+          pickup: "Customer review",
+          dropoff: "",
+          date: "",
+          time: "",
+          passengers: "",
+          message: `Rating: ${rating}/5 stars\n\n${formData.get("review")}`,
+        },
+        "GTlJY6rGVOkzVuY6-"
+      )
+      .then(() => {
+        setReviewSubmitted(true);
+        setReviewSending(false);
+      })
+      .catch((error) => {
+        console.error("Review submission failed:", error);
+        setReviewError(true);
+        setReviewSending(false);
+      });
+  }
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -75,6 +120,98 @@ export default function Testimonials() {
             }`}
           />
         ))}
+      </div>
+
+      <div className="mt-12 border-t border-border pt-8">
+        {reviewSubmitted ? (
+          <div className="mx-auto max-w-xl text-center" role="status">
+            <h3 className="text-xl text-gold mb-2">Thank you for sharing your experience.</h3>
+            <p className="text-gray-400 text-sm">
+              Your review has been sent to our team for review before it is published.
+            </p>
+          </div>
+        ) : (
+          <div className="mx-auto max-w-xl">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="text-center sm:text-left">
+                <h3 className="text-xl text-foreground">Share your experience</h3>
+                <p className="text-gray-400 text-sm">Send a review to our team for approval.</p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setReviewOpen((open) => !open)}
+                aria-expanded={reviewOpen}
+                className="border border-gold bg-gold text-black px-6 py-3 rounded-full uppercase tracking-widest text-xs hover:bg-gold-light transition-colors"
+              >
+                {reviewOpen ? "Close form" : "Write a review"}
+              </button>
+            </div>
+
+            {reviewOpen && (
+              <form onSubmit={handleReviewSubmit} className="mt-6 border border-border bg-background/70 rounded-xl p-6 text-left">
+                <fieldset className="mb-5">
+                  <legend className="text-sm font-semibold mb-2">Your rating</legend>
+                  <div className="flex gap-2" aria-label="Choose a rating from 1 to 5 stars">
+                    {[1, 2, 3, 4, 5].map((value) => (
+                      <button
+                        key={value}
+                        type="button"
+                        onClick={() => setRating(value)}
+                        aria-label={`${value} ${value === 1 ? "star" : "stars"}`}
+                        aria-pressed={rating === value}
+                        className={`text-2xl transition-colors ${value <= rating ? "text-gold" : "text-gray-500"}`}
+                      >
+                        ★
+                      </button>
+                    ))}
+                  </div>
+                </fieldset>
+
+                <label className="block text-sm font-semibold mb-1" htmlFor="review-name">Name (optional)</label>
+                <input
+                  id="review-name"
+                  name="name"
+                  autoComplete="name"
+                  className="w-full bg-card border border-border rounded-md px-4 py-3 mb-4 focus:border-gold outline-none"
+                />
+
+                <label className="block text-sm font-semibold mb-1" htmlFor="review-email">Email (optional)</label>
+                <input
+                  id="review-email"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  className="w-full bg-card border border-border rounded-md px-4 py-3 mb-4 focus:border-gold outline-none"
+                />
+
+                <label className="block text-sm font-semibold mb-1" htmlFor="review-text">Your review</label>
+                <textarea
+                  id="review-text"
+                  name="review"
+                  required
+                  minLength={10}
+                  maxLength={1500}
+                  rows={4}
+                  className="w-full bg-card border border-border rounded-md px-4 py-3 mb-4 focus:border-gold outline-none"
+                />
+
+                {reviewError && (
+                  <p className="text-red-800 text-sm mb-4" role="alert">
+                    {rating ? "We couldn't send your review. Please try again." : "Please select a star rating."}
+                  </p>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={reviewSending}
+                  className="border border-gold bg-gold text-black px-6 py-3 rounded-full uppercase tracking-widest text-xs hover:bg-gold-light disabled:opacity-60 transition-colors"
+                >
+                  {reviewSending ? "Sending..." : "Send for review"}
+                </button>
+              </form>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
