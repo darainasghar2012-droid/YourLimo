@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import emailjs from "@emailjs/browser";
 
+const googleReviewUrl = "https://g.page/r/CVnPe0oPZQrOECE/review";
+
 const reviews = [
   {
     name: "Michael R.",
@@ -129,6 +131,17 @@ export default function Testimonials() {
             <p className="text-gray-400 text-sm">
               Your review has been sent to our team for review before it is published.
             </p>
+            <p className="text-gray-400 text-sm mt-2 mb-4">
+              Want to share it on Google too? Google will ask you to submit it there.
+            </p>
+            <a
+              href={googleReviewUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block border border-gold bg-gold text-black px-6 py-3 rounded-full uppercase tracking-widest text-xs hover:bg-gold-light transition-colors"
+            >
+              Continue to Google Reviews
+            </a>
           </div>
         ) : (
           <div className="mx-auto max-w-xl">
@@ -137,14 +150,24 @@ export default function Testimonials() {
                 <h3 className="text-xl text-foreground">Share your experience</h3>
                 <p className="text-gray-400 text-sm">Send a review to our team for approval.</p>
               </div>
-              <button
-                type="button"
-                onClick={() => setReviewOpen((open) => !open)}
-                aria-expanded={reviewOpen}
-                className="border border-gold bg-gold text-black px-6 py-3 rounded-full uppercase tracking-widest text-xs hover:bg-gold-light transition-colors"
-              >
-                {reviewOpen ? "Close form" : "Write a review"}
-              </button>
+              <div className="flex flex-col sm:flex-row items-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => setReviewOpen((open) => !open)}
+                  aria-expanded={reviewOpen}
+                  className="border border-gold bg-gold text-black px-6 py-3 rounded-full uppercase tracking-widest text-xs hover:bg-gold-light transition-colors"
+                >
+                  {reviewOpen ? "Close form" : "Write a review"}
+                </button>
+                <a
+                  href={googleReviewUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="border border-gold text-gold px-6 py-3 rounded-full uppercase tracking-widest text-xs hover:bg-card transition-colors"
+                >
+                  Review us on Google
+                </a>
+              </div>
             </div>
 
             {reviewOpen && (
