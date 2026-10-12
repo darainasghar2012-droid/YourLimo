@@ -4,15 +4,16 @@ import { useState } from "react";
 import { createPortal } from "react-dom";
 import emailjs from "@emailjs/browser";
 import AddressInput, { loadGoogleMapsScript } from "./AddressInput";
+import { VEHICLE_PRICING } from "../bookingPricing";
 
 const vehicles = [
-  { name: "Cadillac Escalade", tag: "Flagship SUV", passengers: 7, ratePerKm: 3.5, hourlyRate: 120 },
-  { name: "GMC Yukon Denali", tag: "Most Popular", passengers: 7, ratePerKm: 3.25, hourlyRate: 120 },
-  { name: "Chevrolet Suburban", tag: "Group SUV", passengers: 7, ratePerKm: 3.0, hourlyRate: 120 },
-  { name: "Lincoln Navigator", tag: "Ultra-Luxury SUV", passengers: 7, ratePerKm: 3.5, hourlyRate: 120 },
-  { name: "Mercedes-Benz E-Class", tag: "Executive Sedan", passengers: 4, ratePerKm: 2.75, hourlyRate: 120 },
-  { name: "BMW 5 Series", tag: "Sport Executive", passengers: 4, ratePerKm: 2.75, hourlyRate: 120 },
-  { name: "Mercedes-Benz S-Class", tag: "Pinnacle Sedan", passengers: 4, ratePerKm: 4.0, hourlyRate: 160 },
+  { name: "Cadillac Escalade", tag: "Flagship SUV", passengers: 7 },
+  { name: "GMC Yukon Denali", tag: "Most Popular", passengers: 7 },
+  { name: "Chevrolet Suburban", tag: "Group SUV", passengers: 7 },
+  { name: "Lincoln Navigator", tag: "Ultra-Luxury SUV", passengers: 7 },
+  { name: "Mercedes-Benz E-Class", tag: "Executive Sedan", passengers: 4 },
+  { name: "BMW 5 Series", tag: "Sport Executive", passengers: 4 },
+  { name: "Mercedes-Benz S-Class", tag: "Pinnacle Sedan", passengers: 4 },
 ];
 
 const TIP_RATE = 0.10;
@@ -63,10 +64,11 @@ export default function BookingModal({ onClose }) {
 
   function getSubtotal() {
     if (!vehicle) return 0;
+    const pricing = VEHICLE_PRICING[vehicle.name];
     if (distanceKm) {
-      return distanceKm * vehicle.ratePerKm;
+      return distanceKm * pricing.ratePerKm;
     }
-    return MIN_HOURS * vehicle.hourlyRate;
+    return MIN_HOURS * pricing.hourlyRate;
   }
 
   function getTotal() {
@@ -110,7 +112,7 @@ export default function BookingModal({ onClose }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         vehicleName: vehicle?.name,
-        depositAmount: getDeposit(),
+        distanceKm,
         customerEmail: email,
         pickup,
         dropoff,
@@ -120,16 +122,15 @@ export default function BookingModal({ onClose }) {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.url) {
-          window.location.href = data.url;
-        } else {
-          throw new Error("No checkout URL returned");
+        if (!data.url) {
+          throw new Error(data.error || "Unable to start payment.");
         }
+        window.location.href = data.url;
       })
       .catch((err) => {
         console.error("Stripe error:", err);
         setSending(false);
-        alert("Something went wrong starting payment. Please try WhatsApp or call us instead.");
+        alert(err.message || "Something went wrong starting payment. Please try WhatsApp or call us instead.");
       });
   }
 
@@ -198,13 +199,27 @@ export default function BookingModal({ onClose }) {
                   onClick={() => setVehicle(v)}
                   className={`text-left border rounded-lg p-4 transition-all duration-300 ${
                     vehicle?.name === v.name
-                      ? "border-gold bg-gold/5"
+                      ? "border-gold-dark bg-gold-dark"
                       : "border-border hover:border-gold/50"
                   }`}
                 >
-                  <p className="text-xs text-gold uppercase tracking-widest mb-1">{v.tag}</p>
-                  <p className="text-white">{v.name}</p>
-                  <p className="text-gray-500 text-xs">{v.passengers} passengers</p>
+                  <p
+                    className={`text-xs uppercase tracking-widest mb-1 ${
+                      vehicle?.name === v.name ? "text-gold-light" : "text-gold"
+                    }`}
+                  >
+                    {v.tag}
+                  </p>
+                  <p className={vehicle?.name === v.name ? "text-[#FAF3E8]" : "text-white"}>
+                    {v.name}
+                  </p>
+                  <p
+                    className={`text-xs ${
+                      vehicle?.name === v.name ? "text-[#EADBC6]" : "text-gray-500"
+                    }`}
+                  >
+                    {v.passengers} passengers
+                  </p>
                 </button>
               ))}
             </div>

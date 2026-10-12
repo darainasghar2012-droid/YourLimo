@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function Footer() {
   return (
     <footer className="bg-[#3B2314] border-t border-[#8B5E3C] text-[#F5EBDD] py-12 px-6">
@@ -27,7 +29,17 @@ export default function Footer() {
         </div>
       </div>
 
-      <p className="text-center text-xs text-[#C9A27A] mt-10">
+      <div className="flex justify-center mt-10">
+        <Image
+          src="/your-limo-logo.png"
+          alt="YourLimo logo"
+          width={140}
+          height={70}
+          className="h-10 w-auto object-contain opacity-90"
+        />
+      </div>
+
+      <p className="text-center text-xs text-[#C9A27A] mt-6">
         © {new Date().getFullYear()} YourLimo.ca — All Rights Reserved.
       </p>
     </footer>

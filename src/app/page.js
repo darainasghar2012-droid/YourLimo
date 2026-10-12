@@ -1,6 +1,5 @@
 import MovingLimo from "./components/MovingLimo";
 import Testimonials from "./components/Testimonials";
-import PriceCalculator from "./components/PriceCalculator";
 import FadeIn from "./components/FadeIn";
 import GoldParticles from "./components/GoldParticles";
 
@@ -162,17 +161,6 @@ export default function Home() {
             </FadeIn>
           ))}
         </div>
-      </section>
-
-      {/* PRICE CALCULATOR */}
-      <section className="py-24 px-6 bg-warm-surface text-center">
-        <FadeIn>
-          <h2 className="text-3xl md:text-4xl mb-4">Fare Calculator</h2>
-          <p className="text-gray-400 mb-16 max-w-2xl mx-auto">
-            Get an accurate price estimate for your trip.
-          </p>
-        </FadeIn>
-        <PriceCalculator />
       </section>
 
       {/* SERVICE AREA */}
