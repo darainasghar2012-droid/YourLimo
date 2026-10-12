@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import BookingModal from "./BookingModal";
 
 export default function Navbar() {
@@ -32,9 +33,16 @@ export default function Navbar() {
           : "bg-[#3B2314]/85 backdrop-blur-sm border-b border-transparent"
       }`}
     >
-      <nav className="flex items-center justify-between px-6 py-4 max-w-7xl mx-auto text-[#FAF3E8]">
-        <Link href="/" className="text-xl font-bold tracking-widest uppercase">
-          YOUR<span className="text-[#C9A27A]">LIMO</span>
+      <nav className="flex items-center justify-between px-6 py-2 max-w-7xl mx-auto text-[#FAF3E8]">
+        <Link href="/" aria-label="YourLimo home" className="flex items-center">
+          <Image
+            src="/your-limo-logo.png"
+            alt="YourLimo"
+            width={220}
+            height={128}
+            priority
+            className="h-20 w-36 object-contain drop-shadow-[0_0_8px_rgba(255,255,255,0.45)] sm:h-24 sm:w-44"
+          />
         </Link>
 
         {/* Desktop links */}
