@@ -1,4 +1,5 @@
 import { Cormorant_Garamond, Inter } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -38,6 +39,7 @@ export default function RootLayout({ children }) {
 <Footer />
         <WhatsAppButton />
         <MobileTabBar />
+        <Analytics />
       </body>
     </html>
   );
